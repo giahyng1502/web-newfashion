@@ -60,7 +60,7 @@ const ProductDetail = () => {
 
         try {
 
-            const res = await axios.put(`http://160.30.21.59:3000/putReview/${id}`, formData, {
+            const res = await axios.put(`https://backend-newfashion.onrender.com/putReview/${id}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 }
