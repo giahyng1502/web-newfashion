@@ -1,7 +1,11 @@
 import axios from "./axios";
 
-const fetchAllUser = () => {
-  return axios.get("api/users?page=2");
+const login = async (user) => {
+  const res =await axios.post("/users/login", {
+    email: user.email,
+    password: user.password,
+  });
+  return res.token;
 };
 
-export { fetchAllUser };
+export { login };

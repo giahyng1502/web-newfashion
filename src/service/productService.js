@@ -18,3 +18,10 @@ export const addProduct = (product) => {
     }
     return axios(options);
 }
+export const addReview = async (productId, reviewData) => {
+    return await axios.post(`putreview/${productId}`, reviewData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+}

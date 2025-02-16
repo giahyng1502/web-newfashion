@@ -8,12 +8,12 @@ function Header(props) {
     <>
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
-          <Navbar.Brand href="#home">New Fashion</Navbar.Brand>
+          <Navbar.Brand href="/home">New Fashion</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link href="add">Thêm quần áo</Nav.Link>
-              <Nav.Link href="#link">Link</Nav.Link>
+              <Nav.Link href="category">Thêm danh mục sản phẩm</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

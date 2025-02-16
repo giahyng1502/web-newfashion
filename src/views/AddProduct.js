@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Button, Form, Container } from "react-bootstrap";
+import axios from "../service/axios";
+import {toast} from "react-toastify";
 
 const AddProduct = () => {
     const [product, setProduct] = useState({
@@ -10,7 +12,7 @@ const AddProduct = () => {
         price: 0,
         description: "",
     });
-
+    const [selectedCategoryId, setSelectedCategoryId] = useState('')
     const [images, setImages] = useState([]); // Mảng chứa nhiều ảnh đã chọn
 
     const handleChange = (e) => {
@@ -20,6 +22,22 @@ const AddProduct = () => {
                 [name]: value,
             }));
     };
+
+    useEffect(() => {
+        getCategories();
+    }, []);
+    const getCategories = async () => {
+        try {
+            const res = await axios.get("/category");
+            if (res?.data) {
+                setCategories(res.data);
+            }
+        } catch (error) {
+            console.error("Lỗi khi lấy danh mục:", error);
+            toast.error("Không thể lấy danh mục!");
+        }
+    };
+    const [categories, setCategories] = useState([]);
 
     // Hàm xử lý thay đổi hình ảnh và upload lên Cloudflare R2
     const handleImageChange = (e) => {
@@ -44,6 +62,7 @@ const AddProduct = () => {
         // Thêm các trường thông tin sản phẩm vào FormData
         formData.append("name", product.name);
         formData.append("price", product.price);
+        formData.append("category", selectedCategoryId);
         formData.append("quantity", product.quantity);
         formData.append("description", product.description);
         formData.append("size", product.size);  // Truyền mảng size mà không cần JSON.stringify
@@ -90,6 +109,16 @@ const AddProduct = () => {
                         onChange={handleChange}
                     />
                 </Form.Group>
+                <Form.Label>Categories</Form.Label>
+
+                <Form.Select onChange={(e) => setSelectedCategoryId(e.target.value)}>
+                    <option value="">Chọn danh mục</option>
+                    {categories.map((category) => (
+                        <option key={category._id} value={category._id}>
+                            {category.categoryName}
+                        </option>
+                    ))}
+                </Form.Select>
 
                 <Form.Group controlId="formProductPrice">
                     <Form.Label>Price</Form.Label>
